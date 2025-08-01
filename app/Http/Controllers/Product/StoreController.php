@@ -25,7 +25,8 @@ class StoreController extends Controller
         $tagsIds = $data['tags'];
         $colorsIds = $data['colors'];
         unset($data['tags'], $data['colors']);
-
+        $groupsIds = $data['groups'];
+        unset($data['groups']);
         $product = Product::firstOrCreate([
             'title' => $data['title']
         ], $data);

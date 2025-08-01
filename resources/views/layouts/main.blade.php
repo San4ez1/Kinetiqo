@@ -164,6 +164,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="{{ route('group.index') }}" class="nav-link">
+              <i class="nav-icon fas fa-list-ul"></i>
+              <p>Группы</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="{{ route('category.index') }}" class="nav-link">
               <i class="nav-icon fas fa-list-ul"></i>
               <p>Категории</p>
@@ -232,7 +238,13 @@
 
 <!--<script src="{{ asset('adminLte/plugins/select2/js/select2.full.min.js') }}"></script-->
 <script>
-   $(document).ready(function() {
+  $(document).ready(function() {
+    $('.group').select2({
+    placeholder: "Выберите группу",
+    allowClear: true,
+    width: '100%'
+  }) // Важно: для корректной ширины
+  
   $('.tags').select2({
     placeholder: "Выберите тег",
     allowClear: true,

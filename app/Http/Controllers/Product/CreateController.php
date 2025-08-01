@@ -8,6 +8,7 @@ use App\Models\Tag;
 use App\Models\Color;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\Group;
 
 class CreateController extends Controller
 {
@@ -16,11 +17,13 @@ class CreateController extends Controller
         // Реализация метода
         $tags = Tag::all();
 
+        $groups = Group::all();
+
         $colors = Color::all();
 
         $categories = Category::all();
 
-        return view('product.create', compact('tags', 'colors', 'categories'));
+        return view('product.create', compact('tags', 'groups', 'colors', 'categories'));
 
     }
 }

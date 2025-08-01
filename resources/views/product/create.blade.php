@@ -70,7 +70,14 @@
                       <option value="{{ $category->id }}">{{ $category->title }}</option>
                     @endforeach
                   </select>
-              </div>
+            </div>
+            <div class="form-group">  
+              <select name="groups[]" class="group" multiple="multiple" data-placeholder="Выберите группу" style="width: 100%;">
+                @foreach($groups as $group)
+                  <option value="{{ $group->id }}">{{ $group->title }}</option>
+                @endforeach
+              </select>
+            </div>
 
             <div class="form-group">  
               <select name="tags[]" class="tags" multiple="multiple" data-placeholder="Выберите тег" style="width: 100%;">
