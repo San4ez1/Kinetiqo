@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Traits\Filterable;
 
 class Product extends Model
 {
+    use Filterable;
+
     protected $table = 'products';
     protected $guarded = false;
 
@@ -17,5 +20,21 @@ class Product extends Model
 
     public function getImageUrlAttribute(){
         return url('storage/' . $this->preview_image);
+    }
+
+    public function colors()
+    {
+        return $this->belongsToMany(Color::class, 'color_products', 'product_id', 'color_id');
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'product_tags', 'product_id', 'tag_id');
+    }
+
+
+    public function productImages()
+    {
+        return $this->hasMany(ProductImage::class, 'product_id', 'id');
     }
 }

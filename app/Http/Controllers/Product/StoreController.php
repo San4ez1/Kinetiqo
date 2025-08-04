@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Product;
 
+use App\Models\ProductImage;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Tag;
@@ -20,11 +21,13 @@ class StoreController extends Controller
         // Валидация и сохранение цвета
         $data = $request->validated();
 
+        $productImages = $data['product_images'];
+
         $data['preview_image'] = Storage::disk('public')->put('/images', $data['preview_image']);
 
         $tagsIds = $data['tags'];
         $colorsIds = $data['colors'];
-        unset($data['tags'], $data['colors']);
+        unset($data['tags'], $data['colors'], $data['product_images']);
         $groupsIds = $data['groups'];
         unset($data['groups']);
         $product = Product::firstOrCreate([
@@ -42,6 +45,19 @@ class StoreController extends Controller
             ColorProduct::firstOrCreate([
                 'product_id' => $product->id,
                 'color_id' => $colorId,
+            ]);
+        }
+
+        foreach ($productImages as $productImage) {
+            $currentImagesCount = ProductImage::where('product_id', $product->id)->count();
+
+            if ($currentImagesCount > 3) continue;
+            
+            $filePath = Storage::disk('public')->put('/images', $productImage);
+            
+            ProductImage::create([
+                'product_id' => $product->id,
+                'file_path' => $filePath,
             ]);
         }
 
